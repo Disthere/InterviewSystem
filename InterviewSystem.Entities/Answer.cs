@@ -1,12 +1,13 @@
-﻿namespace InterviewSystem.Entities
+﻿using InterviewSystem.Entities.Base;
+
+namespace InterviewSystem.Entities
 {
-    public class PollAnswer
+    public class Answer : Identity
     {
-        public PollAnswer(int id, string version) =>
+        public Answer(Guid id, string version) =>
             (Id, Version) = (id, version);
 
-        public int Id { get; }
-        public string Version { get; }
+        public string Version { get; init; }
         public int Votes { get; set; }
         public double Percents { get; set; }
 
@@ -18,7 +19,7 @@
 
         public override string ToString()
         {
-            return $"{Version} ({Votes} {Percents:F})";
+            return $"{Version} - {Votes} ({Percents:F}%)";
         }
     }
 }

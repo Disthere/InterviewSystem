@@ -1,7 +1,7 @@
 ﻿using InterviewSystem.Entities;
 using System.Text;
 
-namespace InterviewSystem.ConsoleClient
+namespace InterviewSystem.Application
 {
     public class PollResults
     {
@@ -12,7 +12,7 @@ namespace InterviewSystem.ConsoleClient
             _poll = poll;
         }
 
-       public string GetView()
+        public string GetView()
         {
             var stringBuilder = new StringBuilder(_poll.Question);
 
@@ -20,6 +20,7 @@ namespace InterviewSystem.ConsoleClient
 
             if (_poll.Answers != null && _poll.Answers.Any())
             {
+                _poll.Answers.OrderBy(x => x.Percents);
                 _poll.Answers.ForEach(x => stringBuilder.Append('*').AppendLine(x.ToString()));
             }
             return stringBuilder.ToString();

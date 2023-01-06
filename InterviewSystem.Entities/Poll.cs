@@ -1,16 +1,20 @@
-using System.Text;
+using InterviewSystem.Entities.Base;
 
 namespace InterviewSystem.Entities
 {
-    public class Poll
+    public class Poll : Identity
     {
-        public Poll(string question) =>
-            Question = question;
+        public Poll(string question, List<Answer> answers = null): this(question) =>
+            (Question, Answers) = (question, answers);
 
-        public string Question { get; }
-        public List<PollAnswer> Answers { get; set; } = null!;
-                
-        public void VoteTo(int id, int voteWeight = 1)
+        private Poll(string question) =>
+            Question = question;
+            
+
+        public string Question { get; init; }
+        public List<Answer>? Answers { get; init; }
+
+        public void VoteTo(Guid id, int voteWeight = 1)
         {
             var item = Answers?.SingleOrDefault(x => x.Id == id);
             if (item == null)
@@ -20,7 +24,6 @@ namespace InterviewSystem.Entities
 
             var totalVotes = Answers?.Sum(x => x.Votes) ?? 0;
             Answers?.ForEach(x => x.SetPercents(totalVotes));
-
         }
     }
 }
